@@ -1,16 +1,16 @@
 var Device = require('zetta-device');
 var util = require('util');
 
-var Starter = module.exports = function(options) {
+var Facebook = module.exports = function(options) {
   Device.call(this);
   this._default = options['default'];
 };
-util.inherits(Starter, Device);
+util.inherits(Facebook, Device);
 
-Starter.prototype.init = function(config) {
+Facebook.prototype.init = function(config) {
   config
-  .name('Starter')
-  .type('starter')
+  .name('Facebook')
+  .type('facebook')
   .state('waiting')
   .when('waiting', { allow: ['do']})
   .when('doing', { allow: [] })
@@ -19,7 +19,7 @@ Starter.prototype.init = function(config) {
   ]);
 };
 
-Starter.prototype.do = function(message, cb) {
+Facebook.prototype.do = function(message, cb) {
   this.state = 'doing';
   this.log(this._default + ': ' + message);
   this.state = 'waiting';

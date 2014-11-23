@@ -1,23 +1,23 @@
 var Scout = require('zetta-scout');
 var util = require('util');
-var Starter = require('./starter');
+var Facebook = require('./facebook');
 
-var StarterScout = module.exports = function() {
+var FacebookScout = module.exports = function() {
   Scout.call(this);
 };
-util.inherits(StarterScout, Scout);
+util.inherits(FacebookScout, Scout);
 
-StarterScout.prototype.init = function(next) {
+FacebookScout.prototype.init = function(next) {
 
   var self = this;
 
-  var query = this.server.where({type: 'starter'});
+  var query = this.server.where({type: 'facebook'});
 
   this.server.find(query, function(err, results) {
     if (results[0]) {
-      self.provision(results[0], Starter, {default: 'DEFAULT'});
+      self.provision(results[0], Facebook, {default: 'DEFAULT'});
     } else {
-      self.discover(Starter, {default: 'DEFAULT'});
+      self.discover(Facebook, {default: 'DEFAULT'});
     }
   });
 

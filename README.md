@@ -3,7 +3,7 @@
 ###Install
 
 ```
-$> git clone https://github.com/zettajs/zetta-facebook-http-driver zetta-{device}-{platform}-driver
+$> npm install zetta-facebook-http-driver
 ```
 
 ###Usage

@@ -3,7 +3,7 @@ var util = require('util');
 
 var Facebook = module.exports = function(options) {
   Device.call(this);
-  this._default = options['default'];
+  this._fb = options['fb'];
 };
 util.inherits(Facebook, Device);
 
@@ -15,13 +15,30 @@ Facebook.prototype.init = function(config) {
   .when('waiting', { allow: ['do']})
   .when('doing', { allow: [] })
   .map('do', this.do, [
-    { name: 'message', type: 'text'}
+    { name: 'accessToken', type: 'text'}
   ]);
 };
 
-Facebook.prototype.do = function(message, cb) {
+Facebook.prototype.do = function(accessToken, cb) {
+  var self = this;
+
   this.state = 'doing';
-  this.log(this._default + ': ' + message);
-  this.state = 'waiting';
-  cb();
+
+  if (!!accessToken) {
+    this._fb.setAccessToken(accessToken);
+  }
+
+  this._fb.napi('/me', function (error, me) {
+    if (error) {
+      if(error.response.error.code === 'ETIMEDOUT') {
+        console.log('request timeout');
+      } else {
+        console.log('error', error.message);
+      } 
+    } else {
+      console.log(me);
+    }
+    self.state = 'waiting';
+    cb();
+  });
 };

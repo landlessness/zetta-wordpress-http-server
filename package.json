@@ -9,7 +9,8 @@
   "license": "MIT",
   "dependencies": {
     "zetta-device": "*",
-    "zetta-scout": "*"
+    "zetta-scout": "*",
+    "fb": "~0.7.0"
   },
   "directories": {
     "example": "example"

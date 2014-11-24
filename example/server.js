@@ -4,5 +4,5 @@ var app = require('./apps/starter');
 
 zetta()
   .use(Starter)
-  .use(app)
+  // .use(app)
   .listen(1337);

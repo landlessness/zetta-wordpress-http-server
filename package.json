@@ -10,7 +10,8 @@
   "dependencies": {
     "zetta-device": "*",
     "zetta-scout": "*",
-    "fb": "~0.7.0"
+    "fb": "~0.7.0",
+    "wordpress": "~1.0.0"
   },
   "directories": {
     "example": "example"

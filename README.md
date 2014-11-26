@@ -1,19 +1,19 @@
-##Zetta Facebook driver
+##Zetta Wordpress driver
 
 ###Install
 
 ```
-$> npm install zetta-facebook-http-driver
+$> npm install zetta-wordpress-http-driver
 ```
 
 ###Usage
 
 ```
 var zetta = require('zetta');
-var Facebook = require('zetta-facebook-http-driver');
+var Wordpress = require('zetta-wordpress-http-driver');
 
 zetta()
-  .use(Facebook)
+  .use(Wordpress)
   .listen(1337)
 ```
 

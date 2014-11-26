@@ -1,26 +1,26 @@
 var Scout = require('zetta-scout');
 var util = require('util');
-var Facebook = require('./facebook');
+var Wordpress = require('./wordpress');
 
-var fb = require('fb');
+var wp = require('wordpress');
 
-var FacebookScout = module.exports = function() {
+var WordpressScout = module.exports = function() {
   Scout.call(this);
 };
-util.inherits(FacebookScout, Scout);
+util.inherits(WordpressScout, Scout);
 
-FacebookScout.prototype.init = function(next) {
+WordpressScout.prototype.init = function(next) {
 
   var self = this;
 
-  var query = this.server.where({type: 'facebook'});
-  var options = {fb: fb};
+  var query = this.server.where({type: 'wordpress'});
+  var options = {wp: wp};
 
   this.server.find(query, function(err, results) {
     if (results[0]) {
-      self.provision(results[0], Facebook, options);
+      self.provision(results[0], Wordpress, options);
     } else {
-      self.discover(Facebook, options);
+      self.discover(Wordpress, options);
     }
   });
 

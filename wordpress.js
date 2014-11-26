@@ -1,42 +1,43 @@
 var Device = require('zetta-device');
 var util = require('util');
 
-var Facebook = module.exports = function(options) {
+var Wordpress = module.exports = function(options) {
   Device.call(this);
-  this._fb = options['fb'];
+  this._wp = options['wp'];
 };
-util.inherits(Facebook, Device);
+util.inherits(Wordpress, Device);
 
-Facebook.prototype.init = function(config) {
+Wordpress.prototype.init = function(config) {
   config
-  .name('Facebook')
-  .type('facebook')
+  .name('Wordpress')
+  .type('wordpress')
   .state('waiting')
   .when('waiting', { allow: ['do']})
   .when('doing', { allow: [] })
   .map('do', this.do, [
-    { name: 'accessToken', type: 'text'}
+    { name: 'url', type: 'text'},
+    { name: 'username', type: 'text'},
+    { name: 'password', type: 'text'},
+    { name: 'data', type: 'text'},
   ]);
 };
 
-Facebook.prototype.do = function(accessToken, cb) {
+Wordpress.prototype.do = function(url, username, password, data, cb) {
   var self = this;
 
   this.state = 'doing';
+  
+  var client = this._wp.createClient({
+      url: url,
+      username: username,
+      password: password
+  });
 
-  if (!!accessToken) {
-    this._fb.setAccessToken(accessToken);
-  }
-
-  this._fb.napi('/me', function (error, me) {
+  client.newPost({content: data, author: 4, status: 'draft', title: 'zetta test'}, function (error, posts) {
     if (error) {
-      if(error.response.error.code === 'ETIMEDOUT') {
-        console.log('request timeout');
-      } else {
-        console.log('error', error.message);
-      } 
+        console.log('error', error);
     } else {
-      console.log(me);
+      console.log(posts);
     }
     self.state = 'waiting';
     cb();
